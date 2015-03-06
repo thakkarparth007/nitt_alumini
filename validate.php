@@ -1,9 +1,17 @@
-<?php 
-
-require_once "session.inc";
-require_once("utils.php");
-
-$data = array();
+<?php
+/* 
+file: validate.php 
+description:
+	Contains the logic for the backend validation of the data.
+	Only one "public" method - validate(). Uses the data from the 
+	$_POST array (assuming that the form has been submitted already)
+	and returns a json string of the form:
+	{
+		status: "success" or "error",
+		if success, then for each data-field, returns a string containing the error
+		description for that field, or false - indicating no error
+	}
+*/
 
 $max_photo_size = 1048576;	// 1 MB
 $upload_required = true;
@@ -32,7 +40,7 @@ function validate_contact() {
 	$contact = sanitize_input($_POST['contact1']);
 	
 	// ?????
-	if(!preg_match("/^\+\d{12,13}$/", $contact))
+	if(!preg_match("/^[0\+]\d{12,13}$/", $contact))
 		return "Enter a valid 10 digit or 11 digit mobile number = $contact";
 
 	return false;
@@ -43,7 +51,7 @@ function validate_sec_contact() {
 	$sec_contact = sanitize_input($_POST['sec_contact1']);
 	
 	// ?????
-	if(!preg_match("/^\+\d{12,13}$/", $sec_contact))
+	if(!preg_match("/^[0\+]\d{12,13}$/", $sec_contact))
 		return "Enter a valid 10 digit or 11 digit mobile number";
 
 	return false;
@@ -117,8 +125,13 @@ function validate_desgn() {
 	return false;
 }
 function validate_past_expr() {
-	$past_expr = sanitize_input($_POST['past_expr']);
-	
+	$past_expr = sanitize_input($_POST['past_expr1']);
+
+	$i = 1;
+	while(isset($_POST['past_expr' . $i])) {
+		$past_expr .= ";" . sanitize_input($_POST['past_expr' . $i]);
+		$i++;
+	}
 	// ??
 	return false;
 }
@@ -179,8 +192,66 @@ function validate_entreprenuer() {
 	return false;
 }
 
-if( $_SERVER["REQUEST_METHOD"] == "POST") {
+/*
+	Data validation for page 2.
+ */
+function validate_gl() {
+	$gl = sanitize_input($_POST['gl']);
+	
+	if( strtolower($gl) != "yes" && strtolower($gl) != "no")
+		return "Enter either 'Yes' or 'No' for this field";
+
+	return false;
+}
+
+function validate_faculty() {
+	$faculty = sanitize_input($_POST['faculty']);
+	
+	if( strtolower($faculty) != "yes" && strtolower($faculty) != "no")
+		return "Enter either 'Yes' or 'No' for this field";
+
+	return false;
+}
+
+function validate_last_reunion() {
+	$last_reunion = sanitize_input($_POST['last_reunion']);
+	
+	if(strtotime($last_reunion) > strtotime("now"))
+		return "Enter a valid date of last reunion";
+
+	return false;
+}
+
+function validate_next_reunion() {
+	$next_reunion = sanitize_input($_POST['next_reunion']);
+	
+	if(strtotime($next_reunion) < strtotime("now"))
+		return "Enter a valid date of next reunion";
+
+	return false;
+}
+
+function validate_DAA() {
+	$DAA = sanitize_input($_POST['DAA']);
+	
+	if( strtolower($DAA) != "yes" && strtolower($DAA) != "no")
+		return "Enter either 'Yes' or 'No' for this field";
+
+	return false;
+}
+
+
+function sanitize_input($data) {
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
+function validate() {
 	$err = array();
+	// todo current country
+	// todo past experience
 	$err['name'] 		= validate_name();
 	$err['email'] 		= validate_email();
 	$err['contact'] 	= validate_contact();
@@ -199,6 +270,13 @@ if( $_SERVER["REQUEST_METHOD"] == "POST") {
 	$err['last_visit'] 	= validate_last_visit();
 	$err['entreprenuer']= validate_entreprenuer();
 
+	// page 2
+	$err['gl']				= validate_gl();
+	$err['faculty'] 		= validate_faculty();
+	$err['last_reunion'] 	= validate_last_reunion();
+	$err['next_reunion'] 	= validate_next_reunion();
+	$err['DAA'] 			= validate_DAA();
+
 	$prob = false;
 	foreach($err as $name => $val) {
 		if($val) {
@@ -208,12 +286,12 @@ if( $_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if(!$prob)
-		Success(1);
+		$err["status"] = "success";
 	else
-		Error($err);
+		$err["status"] = "error";
+
+	$err = json_encode($err);
+	return $err;
 }
-else {
-	Error();
-}
- 
+
 ?>

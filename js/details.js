@@ -30,7 +30,7 @@ var part1 = [
 	type: "tel",
 	required: true,
 	rule: function(s) {
-		if(!/^\+\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
+		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
 
 		return false;
 	}
@@ -41,7 +41,7 @@ var part1 = [
 	type: "tel",
 	required: false,
 	rule: function(s) {
-		if(!/^\+\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
+		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
 
 		return false;
 	}
@@ -74,6 +74,16 @@ var part1 = [
 {
 	name: "curr_addr",
 	readable_name: "Current Address",
+	type: "text",
+	required: true,
+	rule: function(s) {
+		// ??
+		return false;
+	}
+},
+{
+	name: "curr_country",
+	readable_name: "Current Country",
 	type: "text",
 	required: true,
 	rule: function(s) {
@@ -137,7 +147,7 @@ var part1 = [
 	}
 },
 {
-	name: "past_expr",
+	name: "past_expr1",
 	readable_name: "Past Experiences",
 	type: "text",
 	required: true,
@@ -239,6 +249,20 @@ var part2 = [
 },
 {
 	name: "DAA",
+	readable_name: "Are you a DAA recepient?",
+	type: "text",
+	required: true,
+	rule: function(s) {
+		// ??
+		// 
+		return false; 
+	}
+}
+];
+
+var part3 = [
+{
+	name: "DAA1",
 	readable_name: "Are you a DAA recepient?",
 	type: "text",
 	required: true,

@@ -49,9 +49,10 @@ br {
 }
 .success {
 	color: green;
+	display: none;
 }
 
-#frm2 label {
+#page2 label {
 	width: 200px;
 }
 
@@ -66,4 +67,7 @@ form p:even {
 p {
 	padding: 0;
 	margin: 0;
+}
+#p_india_addr {
+	display: none;
 }
