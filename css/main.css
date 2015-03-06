@@ -1,0 +1,69 @@
+html, body {
+	font-family: calibri;
+}
+
+#tabContainer {
+	margin: 0 auto;
+	width: 75%;
+}
+
+a.tab {
+	text-decoration: none;
+	padding: 10px 50px;
+	margin: 0;
+	font: 16px verdana;
+	display: inline-block;
+	border-radius: 10px 0 0 0;
+}
+.tab:hover {
+	box-shadow: 0 0 8px 0 #000 inset;
+}
+
+label {
+	width: 150px;
+	float: left;
+	display: inline-block;
+	margin: 10px 20px;
+	font-size: 20px;
+}
+input {
+	width: 200px;
+	margin: 10px 0;
+	padding: 8px;
+	border-radius: 2px;
+	border:1px solid black;
+}
+input:focus {
+	box-shadow: 0 0 10px 0 #109496;
+	-webkit-outline: none;
+	-moz-outline: none;
+	-o-outline: none;
+	-ms-outline: none;
+	outline: none;
+}
+br {
+	clear: both;
+}
+.error {
+	color: red;
+}
+.success {
+	color: green;
+}
+
+#frm2 label {
+	width: 200px;
+}
+
+form {
+	border: 1px solid #109496;
+	margin: 0 auto;
+	width: 75%;
+}
+
+form p:even {
+}
+p {
+	padding: 0;
+	margin: 0;
+}
