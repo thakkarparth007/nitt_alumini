@@ -1,3 +1,6 @@
+// CHANGE IT!!!!!
+var SERVER_CURRENT_YEAR = 2015;
+
 var part1 = [
 {
 	name: "name",

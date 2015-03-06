@@ -1,5 +1,6 @@
 <?php 
 
+require_once "session.inc";
 require_once("utils.php");
 
 $data = array();
@@ -27,7 +28,8 @@ function validate_email() {
 	return false;
 }
 function validate_contact() {
-	$contact = sanitize_input($_POST['contact']);
+	//return false;
+	$contact = sanitize_input($_POST['contact1']);
 	
 	// ?????
 	if(!preg_match("/^\+\d{12,13}$/", $contact))
@@ -36,7 +38,9 @@ function validate_contact() {
 	return false;
 }
 function validate_sec_contact() {
-	$sec_contact = sanitize_input($_POST['sec_contact']);
+	//return false;
+
+	$sec_contact = sanitize_input($_POST['sec_contact1']);
 	
 	// ?????
 	if(!preg_match("/^\+\d{12,13}$/", $sec_contact))
@@ -204,7 +208,7 @@ if( $_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if(!$prob)
-		Success();
+		Success(1);
 	else
 		Error($err);
 }

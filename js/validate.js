@@ -3,7 +3,8 @@ form1.on("submit", validateData);
 
 function validateData() {
 	var error = false;
-	var data = {};
+	var tmp;
+	var con = '', sec_con = '';
 
 	for(var i in part1) {
 		var o = part1[i];
@@ -12,14 +13,15 @@ function validateData() {
 
 		var $field = $( "#" + name );
 
-		data[name] = (/contact/.test(name) ? $field.intlTelInput("getNumber")
+		tmp = (/contact/.test(name) ? $field.intlTelInput("getNumber")
 										  : $field.val());
 
-		if(/contact/.test(name))
-			alert($field.intlTelInput("getNumber"));
+		if(name == 'contact')
+			con = $field.intlTelInput("getNumber");
+		if(name == 'sec_contact')
+			sec_con = $field.intlTelInput("getNumber");
 
-
-		if(o.required && !data[name]) {
+		if(o.required && !tmp) {
 			$("#err" + name)
 				.html(r_name + " is required")
 				.removeClass("success")
@@ -27,9 +29,9 @@ function validateData() {
 
 			error = true;
 		}
-		else if(o.rule(data[name])) {
+		else if(o.rule(tmp)) {
 			$("#err" + name)
-				.html(o.rule(data[name]))
+				.html(o.rule(tmp))
 				.removeClass("success")
 				.addClass("error");
 
@@ -43,5 +45,11 @@ function validateData() {
 		}
 	}
 
-	return !error;
+	alert("yo");
+	//if(!error) {
+		$("#contact1").val(con);
+		$("#sec_contact1").val(sec_con);
+	//}
+	alert("yoyo");
+	return false;
 }

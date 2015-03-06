@@ -8,8 +8,9 @@ function sanitize_input($data) {
 	return $data;
 }
 
-function Success() {
-	echo json_encode(array("status" => "Success"));
+function Success($part) {
+	$_SESSION['part'] = $part + 1;
+	include ("part" . $_SESSION['part'] . '.html');
 }
 
 function Error($err) {
