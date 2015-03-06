@@ -14,3 +14,4 @@ Todos:
 9. Required fields?
 10. Use localstorage for storing values of the form
 11. Workout the submit-button accessiblity. Something awkward.
+12. Image storage location?
