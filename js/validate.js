@@ -43,18 +43,5 @@ function validateData() {
 		}
 	}
 
-	$.ajax({
-		type: "POST",
-		url: "submit1.php",
-		timeout: 3000,
-		data: data,
-		success: function(data) {
-			alert(data);
-		},
-		error: function() {
-			alert("HPVP. Error");
-		}
-	});
-
-//	return false;
+	return !error;
 }
