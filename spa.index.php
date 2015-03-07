@@ -20,13 +20,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<link rel="stylesheet" href="js/intl-tel-input/build/css/intlTelInput.css">
 </head>
 <body>
+	<div id="error_message">
+		<span id="error_message_text">
+			There are errors in the form you submitted. Please make the necessary corrections. 
+
+			<br><br>
+
+			Click this box to dismiss this message.
+		</span>
+	</div>
 	<div id="tabContainer">
-		<a href="#part1" class="tab">Part 1</a>
-		<a href="#part2" class="tab">Part 2</a>
-		<a href="#part3" class="tab">Part 3</a>
+		<div id="tabWrapper">
+			<a href="#part1" id="link_p1" class="tab active">Part 1 : Contact Details</a>
+			<a href="#part2" id="link_p2" class="tab">Part 2 : Contribution to NITT</a>
+			<a href="#part3" id="link_p3" class="tab">Part 3 : Services from Students</a>
+		</div>
 	</div>
 	<script id="past_expr_widget_tpl" type="text/x-handlebars-template">
-		<span id="past_expr{{EXPR_COUNT}}_span">
+		<span class="past_expr_span" id="past_expr{{EXPR_COUNT}}_span">
+			<label></label>
 			<input type="text" name="past_expr{{EXPR_COUNT}}" id="past_expr{{EXPR_COUNT}}">
 			<a href="" class="past_expr_rem" id="past_expr{{EXPR_COUNT}}_rem" name="past_expr{{EXPR_COUNT}}_rem">Remove</a>
 		</span>
@@ -127,7 +139,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="past_expr">Past Experiences</label>
 			<div id="expr_container">
-				<span id="past_expr1_span">
+				<span class="past_expr_span" id="past_expr1_span">
 					<input type="text" name="past_expr1" id="past_expr1">
 					<a href="" class="past_expr_rem" id="past_expr1_rem" name="past_expr1_rem">Remove</a>
 				</span>
@@ -149,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 		<p>
 			<label for="nationality">Nationality</label>
-			<input type="text" name="nationality" id="nationality">
+			<input type="text" name="nationality" id="nationality" value="Indian">
 			<span id="succnationality" class="success">✓ Valid</span><span id="errnationality" class="error"></span>
 		</p>
 		<br>
@@ -164,6 +176,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="entreprenuer">Entreprenuer or not</label>
 			<select name="entreprenuer" id="entreprenuer">
+				<option value="0">Select...</option>
 				<option value="yes">Yes</option>
 				<option value="no">No</option>
 			</select>
@@ -175,6 +188,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="gl">Are you interested in giving Guest Lectures or Group Interactions</label>
 			<select name="gl" id="gl">
+				<option value="0">Select...</option>
 				<option value="yes">Yes</option>
 				<option value="no">No</option>
 			</select>
@@ -185,6 +199,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="faculty">Are you interested in being a Visiting or Adjunct Faculty</label>
 			<select name="faculty" id="faculty">
+				<option value="0">Select...</option>
 				<option value="yes">Yes</option>
 				<option value="no">No</option>
 			</select>
@@ -209,6 +224,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="DAA">Are you a DAA recepient?</label>
 			<select name="DAA" id="DAA">
+				<option value="0">Select...</option>
 				<option value="yes">Yes</option>
 				<option value="no">No</option>
 			</select>
@@ -220,6 +236,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<p>
 			<label for="DAA">Are you a DAA1 recepient?</label>
 			<select name="DAA1" id="DAA1">
+				<option value="0">Select...</option>
 				<option value="yes">Yes</option>
 				<option value="no">No</option>
 			</select>
@@ -230,6 +247,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<input type="hidden" name="MAX_FILE_SIZE" value="16000">
 		<input type="hidden" name="contact1" id="contact1">
 		<input type="hidden" name="sec_contact1" id="sec_contact1">
+		<a id="button_at_bottom" class="disabled">Complete Part 1 to proceed</a>
 		<input type="submit" name="Submit" id="Submit" disabled="disabled" value="Submit">
 	
 	</form>
@@ -248,17 +266,52 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	<?php
 		$err = $GLOBALS["err"];
-		echo "<script type='text/javascript'> var __status = " . $err . ";</script>";
+		echo "<script type='text/javascript'>";
+			echo "var __status = " . $err . ";";
+			echo "var SERVER_TODAY = new Date('" . date('Y-m-d') . "');";
+		echo "</script>";
 	?>
 	<script type="text/javascript" src="js/past_expr.js"></script>
 	<script type="text/javascript" src="js/validate.js"></script>
 	<script type="text/javascript">
-	if(__status && __status.status == "success") {
-		alert("Thanks. Success");
+	function alertUser() {
+		$("body").css("overflow", "hidden");
+		$("#name").blur();
+		$("#error_message")
+			.show("slow")
+			.on('click', function() {
+				$(this).hide("slow");
+				$("body").css("overflow", "auto");
+				$("#name").focus();
+			});
 	}
 	if(__status && __status.status == "error") {
-		// display errors
-		alert("Failed. Retry");
+		alertUser();
+
+		for(var i = 0, key='', l = localStorage.length; i < l; i++)
+		{
+			key = localStorage.key(i);
+			if(localStorage[key] && key != 'photo')
+				$("#" + key).val( localStorage[key] );
+		}
+		for(var name in __status) {
+			if(name == "status") continue;
+			if(!__status[name]) {
+				$("#succ" + name).hide();
+				$("#err" + name)
+					.show()
+					.html(__status[name]);
+			}
+			else {
+				$("#err" + name).hide();
+				$("#succ" + name).show();
+			}
+		}
+
+		$("#button_at_bottom").html("Complete Part 1 to proceed").show();
+		$("#Submit").hide().attr("disabled","disabled");
+
+		validateData(1, false);
 	}
 	</script>
 </body>

@@ -5,6 +5,9 @@ var tpl = Handlebars.compile(src);
 function AddExpr() {
 	var c = ++past_expr_count;
 	$("#expr_container").append(tpl({ EXPR_COUNT: c }));
+
+	$("#past_expr" + c).focus();
+	
 	$("#past_expr" + (c) + "_rem").click(function() {
 		RemExpr(c);
 		return false;
@@ -13,7 +16,6 @@ function AddExpr() {
 }
 
 function RemExpr(c) {
-	alert("hoy");
 	if(past_expr_count == 1) return;
 	$("#past_expr" + c + "_span" ).remove();
 	for(var i = c+1; i <= past_expr_count; i++) {
@@ -27,6 +29,7 @@ function RemExpr(c) {
 
 	}
 	past_expr_count--;
+	$("#past_expr" + past_expr_count).focus();
 	return false;
 }
 

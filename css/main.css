@@ -1,21 +1,49 @@
 html, body {
 	font-family: calibri;
+	margin: 0;
+	padding: 0;
 }
 
 #tabContainer {
-	margin: 0 auto;
-	width: 75%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 40px;
+	background: white;
+	box-shadow: 0 2px 10px 0 #000;
+	z-index: 1000;
+}
+
+#tabWrapper {
+	margin: 0 5% 0 5%;
 }
 
 a.tab {
 	text-decoration: none;
-	padding: 10px 50px;
+	padding: 10px 0 10px 2%;
+	height: 20px;
+	width: 31%;
 	margin: 0;
 	font: 16px verdana;
 	display: inline-block;
-	border-radius: 10px 0 0 0;
+	background: grey;
+	color: white;
+	cursor: default;
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-o-transtion: all 0.25s;
+	-ms-transition: all 0.25s;
+	transition: all 0.25s;
 }
-.tab:hover {
+
+a.tab.active {
+	background: green;
+	cursor: pointer;
+}
+
+a.tab.active:hover, a.tab.active:focus {
 	box-shadow: 0 0 8px 0 #000 inset;
 }
 
@@ -26,14 +54,26 @@ label {
 	margin: 10px 20px;
 	font-size: 20px;
 }
-input {
+input, textarea, select {
 	width: 200px;
 	margin: 10px 0;
 	padding: 8px;
 	border-radius: 2px;
 	border:1px solid black;
+	
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-o-transtion: all 0.25s;
+	-ms-transition: all 0.25s;
+	transition: all 0.25s;
 }
-input:focus {
+textarea {
+	height: 100px;
+}
+input[type="tel"], select {
+	width: 218px;
+}
+input:focus, textarea:focus, select:focus {
 	box-shadow: 0 0 10px 0 #109496;
 	-webkit-outline: none;
 	-moz-outline: none;
@@ -52,22 +92,116 @@ br {
 	display: none;
 }
 
-#page2 label {
-	width: 200px;
+label {
+	width: 26%;
 }
 
 form {
 	border: 1px solid #109496;
-	margin: 0 auto;
-	width: 75%;
+	margin: 40px 5% 40px 5%;
+	padding-top: 10px;
 }
 
-form p:even {
+.page {
+	margin-left: 27%;
 }
+
 p {
 	padding: 0;
-	margin: 0;
+	margin: 0 0 -20px 0;
 }
+
 #p_india_addr {
 	display: none;
+}
+
+#expr_container {
+	margin: 20px 0 -10px 0;
+}
+
+.past_expr_rem, #past_expr_add {
+	text-decoration: none;
+	background: lightblue;
+	box-shadow: 0 0 5px 0 #000;
+	border-radius: 5px;
+	padding: 5px 10px;
+	width: 60px;
+	display: inline-block;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-o-transtion: all 0.25s;
+	-ms-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+.past_expr_rem {
+	margin-left: 10px;
+}
+
+.past_expr_rem:hover, .past_expr_rem:focus,
+#past_expr_add:hover, #past_expr_add:focus {
+	background: blue;
+}
+
+.past_expr_span {
+	display: block;
+}
+
+#Submit, #button_at_bottom {
+	text-decoration: none;
+	background: lightblue;
+	box-shadow: 0 0 5px 0 #000;
+	border-radius: 5px;
+	padding: 10px;
+	border: none;
+	display: inline-block;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	margin: 10px 0 20px 50%;
+	transform: translate(-50%, 0);
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-o-transtion: all 0.25s;
+	-ms-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+#button_at_bottom:hover, #button_at_bottom:focus,
+#Submit:hover, #Submit:focus {
+	background: blue;
+}
+
+#Submit[disabled="disabled"], #button_at_bottom.disabled {
+	background: grey;
+	color: lightgrey;
+}
+
+#error_message {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255,255,255,0.7);
+	display:none;
+	z-index: 2000;
+}
+
+#error_message_text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: green;
+	font-size: 40px;
+	border: 1px solid darkgreen;
+	padding: 50px;
+	background: white;
+	text-align: center;
 }

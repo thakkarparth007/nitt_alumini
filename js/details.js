@@ -1,6 +1,3 @@
-// CHANGE IT!!!!!
-var SERVER_CURRENT_YEAR = 2015;
-
 var part1 = [
 {
 	name: "name",
@@ -54,7 +51,8 @@ var part1 = [
 	rule: function(s) {
 		if(!/^[12][90]\d\d$/.test(s))	return "Enter a valid batch year (e.g. 2010)";
 		var y = parseInt(s);
-		if(y > SERVER_CURRENT_YEAR || y < 1968)
+		var server_year = SERVER_TODAY.getFullYear();
+		if(y > server_year || y < 1968)
 			return "Enter a valid batch year";
 
 		return false; 
@@ -108,8 +106,18 @@ var part1 = [
 	type: "date",
 	required: true,
 	rule: function(s) {
-		// ??
-		
+		var match = s.match(/^(\d\d\d\d)-\d\d-\d\d$/);
+		if(!match || match.length < 2)
+			return "Enter a valid date of birth";
+
+		var yr = parseInt( match[1] );
+		if(!yr) return "Enter a valid date of birth";
+		if(yr < 1930)
+			return "Enter a valid date of birth";
+		// the person must be at least 21 years old to be an aluminus
+		var server_year = SERVER_TODAY.getFullYear();
+		if(yr > server_year - 21)
+			return "Enter a valid date of birth";
 		return false;
 	}
 },
@@ -183,10 +191,12 @@ var part1 = [
 	name: "last_visit",
 	readable_name: "Last visit to campus",
 	type: "date",
-	required: true,
+	required: false,
 	rule: function(s) {
-		// ??
-		
+		var d = new Date(s);
+		if(d.getTime() > SERVER_TODAY.getTime())
+			return "Enter a valid date of last visit";
+
 		return false;
 	}
 },
@@ -196,8 +206,9 @@ var part1 = [
 	type: "text",
 	required: true,
 	rule: function(s) {
-		// ??
-		
+		if(s.toLowerCase() != "yes" && s.toLowerCase() != "no")
+			return "Choose either 'Yes' or 'No'";
+
 		return false;
 	}
 }
@@ -211,7 +222,9 @@ var part2 = [
 	type: "text",
 	required: true,
 	rule: function(s) {
-		// ??
+		if(s.toLowerCase() != "yes" && s.toLowerCase() != "no")
+			return "Choose either 'Yes' or 'No'";
+
 		return false;
 	}
 },
@@ -221,6 +234,8 @@ var part2 = [
 	type: "text",
 	required: true,
 	rule: function(s) {
+		if(s.toLowerCase() != "yes" && s.toLowerCase() != "no")
+			return "Choose either 'Yes' or 'No'";
 		
 		return false;
 	}
@@ -231,7 +246,9 @@ var part2 = [
 	type: "date",
 	required: true,
 	rule: function(s) {
-		// ??
+		var d = new Date(s);
+		if(d.getTime() > SERVER_TODAY.getTime())
+			return "Enter a valid date of last reunion";
 		
 		return false;
 	}
@@ -242,7 +259,9 @@ var part2 = [
 	type: "date",
 	required: false,
 	rule: function(s) {
-		// ??
+		var d = new Date(s);
+		if(d.getTime() < SERVER_TODAY.getTime())
+			return "Enter a valid date of next reunion";
 		
 		return false;
 	}
@@ -253,8 +272,9 @@ var part2 = [
 	type: "text",
 	required: true,
 	rule: function(s) {
-		// ??
-		// 
+		if(s.toLowerCase() != "yes" && s.toLowerCase() != "no")
+			return "Choose either 'Yes' or 'No'";
+
 		return false; 
 	}
 }
@@ -267,8 +287,9 @@ var part3 = [
 	type: "text",
 	required: true,
 	rule: function(s) {
-		// ??
-		// 
+		if(s.toLowerCase() != "yes" && s.toLowerCase() != "no")
+			return "Choose either 'Yes' or 'No'";
+ 
 		return false; 
 	}
 }

@@ -18,13 +18,15 @@ function get_part_obj(part) {
 					 : part == 2 ? part2
 					 			 : part3;	
 }
-function validateData(part) {
+function validateData(part, silent) {
 	var error = false;
 	var part_obj = get_part_obj(part);
 	var part_valid = get_part_valid_object(part);
 
+	silent = silent === undefined ? true : silent;
+	
 	for(var i in part_obj) {
-		validate(part, part_obj[i], true);
+		validate(part, part_obj[i], silent);
 		if(!part_valid[ part_obj[i].name ])
 			error = true;
 	}
@@ -79,19 +81,32 @@ function validate(part, field, silent) {
 		part_valid[name] = 1;
 	}
 
+	// store the data if set, in the localStorage.
+	if(tmp)
+		localStorage[name] = tmp;
+
 	if(!silent && part_valid[name] && validateData(part))
 		activatePart(part + 1);
 }
 
-$("#curr_country").blur(function() {
+$("#contact").on("blur change", function() {
+	var countryData = $(this).intlTelInput("getSelectedCountryData");
+	var countryName = countryData.name.match(/^([^\s]+) /)[1];
+
+	$("#curr_country").val( countryName ).change();
+})
+
+$("#curr_country").on("blur change", function() {
 	if(this.value.toLowerCase() == "india")
 	{
 		$("#p_india_addr").hide();
 		$("#india_addr").val( $("#curr_addr").val() );
+		$("#nationality").val("Indian");
 	}
 	else {
 		$("#p_india_addr").show();
-		$("#india_addr").val( ' ' );
+		$("#india_addr").val("").focus();
+		$("#nationality").val("");
 	}
 });
 
@@ -105,7 +120,7 @@ for(var k = 1; k < 4; k++) {
 				r_name = o.readable_name,
 				$field = $("#" + name);
 
-			$field.on("blur", function(e) {
+			$field.on("change blur", function(e) {
 				validate(k, o);
 			});
 

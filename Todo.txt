@@ -15,3 +15,10 @@ Todos:
 10. Use localstorage for storing values of the form
 11. Workout the submit-button accessiblity. Something awkward.
 12. Image storage location?
+
+8th March, 00:15am
+-------------------
+1. Past Experience validation
+2. Nationality - use dropdown maybe?
+3. Required fields?
+4. Image storage location?

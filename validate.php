@@ -83,7 +83,11 @@ function validate_curr_addr() {
 }
 function validate_india_addr() {
 	$india_addr = sanitize_input($_POST['india_addr']);
-	
+	$curr_country = sanitize_input($_POST['curr_country']);
+
+	if(strtolower($curr_country) != 'india' && !$india_addr) {
+		return "Indian residential address is required";
+	}
 	// ??
 	return false;
 }
@@ -162,12 +166,6 @@ function validate_photo() {
 	if(!in_array($file['type'], $GLOBALS["mime_images"])) {
 		return "Only images may be uploaded";
 	}
-
-	$upload_dir = $GLOBALS['upload_dir'];
-	if(!@move_uploaded_file($file['tmp_name'], $upload_dir . $file['name'])) {
-		return "An unknown error occurred. Please retry2";
-	}
-
 	// ??
 	return false;
 }
@@ -240,6 +238,16 @@ function validate_DAA() {
 	return false;
 }
 
+function move_photo() {
+	$file = $_FILES['photo'];
+	$roll = sanitize_input($_POST['roll']);
+	
+	$upload_dir = $GLOBALS['upload_dir'];
+	if(!@move_uploaded_file($file['tmp_name'], $upload_dir . $roll . "-" . $file['name'])) {
+		return "An unknown error occurred. Please retry2";
+	}
+}
+
 
 function sanitize_input($data) {
 	$data = trim($data);
@@ -285,8 +293,12 @@ function validate() {
 		}
 	}
 
-	if(!$prob)
+	if(!$prob) {
 		$err["status"] = "success";
+		// move the photo only if everything else was successful.
+		move_photo();
+		header('Location: success.php');
+	}
 	else
 		$err["status"] = "error";
 
