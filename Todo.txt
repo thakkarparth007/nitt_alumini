@@ -1,0 +1,23 @@
+Todos:
+-------
+
+7th March, 3:30am
+
+1. Past Experience validation
+2. Current Country validation
+3. Styling
+4. Submit-click full validation and error-display
+5. Display results of server-validation.
+6. More thorough validation on client side
+7. Nationality - use dropdown maybe?
+8. Selects - don't have default as Yes?
+9. Required fields?
+10. Use localstorage for storing values of the form
+11. Workout the submit-button accessiblity. Something awkward.
+12. Image storage location?
+
+8th March, 00:15am
+-------------------
+1. Nationality - use dropdown maybe?
+2. Required fields?
+3. Image storage location?
