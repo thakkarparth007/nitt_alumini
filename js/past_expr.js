@@ -9,6 +9,7 @@ function AddExpr() {
 	$("#past_expr" + c).focus();
 	
 	$("#past_expr" + (c) + "_rem").click(function() {
+		var c = this.id.match(/^past_expr([\d]+)_rem$/)[1];
 		RemExpr(c);
 		return false;
 	});

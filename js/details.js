@@ -27,7 +27,7 @@ var part1 = [
 	type: "tel",
 	required: true,
 	rule: function(s) {
-		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
+		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid mobile number";
 
 		return false;
 	}
@@ -38,7 +38,7 @@ var part1 = [
 	type: "tel",
 	required: false,
 	rule: function(s) {
-		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid 10 or 11 digit mobile number";
+		if(!/^[0\+]\d{12,13}$/.test(s))		return "Enter a valid mobile number";
 
 		return false;
 	}

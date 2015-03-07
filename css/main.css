@@ -1,3 +1,12 @@
+/*
+Handles styling for the devices whose width is greater than 600px.
+Uses 2 media queries. The UI changes slightly at 750px and 950px.
+
+The third piece of code, the one that handles devices below 600px 
+is in a separate file since that is relatively larger than the 
+codes for 750px and 950px displays.
+ */
+
 html, body {
 	font-family: calibri;
 	margin: 0;
@@ -47,8 +56,27 @@ a.tab.active:hover, a.tab.active:focus {
 	box-shadow: 0 0 8px 0 #000 inset;
 }
 
+form {
+	border: 1px solid #109496;
+	margin: 40px 5% 40px 5%;
+	padding-top: 10px;
+}
+
+.page {
+	margin-left: 25%;
+}
+
+p {
+	padding: 0;
+	margin: 0 0 -20px 0;
+}
+
+#p_india_addr {
+	display: none;
+}
+
 label {
-	width: 150px;
+	width: 26%;
 	float: left;
 	display: inline-block;
 	margin: 10px 20px;
@@ -91,32 +119,8 @@ br {
 	color: green;
 	display: none;
 }
-
-label {
-	width: 26%;
-}
-
-form {
-	border: 1px solid #109496;
-	margin: 40px 5% 40px 5%;
-	padding-top: 10px;
-}
-
-.page {
-	margin-left: 27%;
-}
-
-p {
-	padding: 0;
-	margin: 0 0 -20px 0;
-}
-
-#p_india_addr {
-	display: none;
-}
-
 #expr_container {
-	margin: 20px 0 -10px 0;
+	float: left;
 }
 
 .past_expr_rem, #past_expr_add {
@@ -140,6 +144,10 @@ p {
 
 .past_expr_rem {
 	margin-left: 10px;
+}
+
+#past_expr_add {
+	margin-top: 10px;
 }
 
 .past_expr_rem:hover, .past_expr_rem:focus,
@@ -204,4 +212,49 @@ p {
 	padding: 50px;
 	background: white;
 	text-align: center;
+}
+
+/* medium display */
+
+@media(max-width: 950px) {
+	#tabWrapper {
+		margin: 0 5% 0 5%;
+		/*background: red;*/
+	}
+
+	.extra {
+		display: none;
+	}
+
+	a.tab {
+		width: 30.8%;
+	}
+
+	label {
+		width: 23%;
+	}
+
+	.page {
+		margin-left: 15%;
+	}
+
+	#error_message_text {
+		font-size: 32px;
+		padding: 40px;
+		min-width: 350px;
+	}
+}
+
+/* small display */
+@media(max-width: 750px) {	
+	#tabWrapper {
+		margin: 0 2% 0 2%;
+		/*background: orange;*/
+	}
+	.page {
+		margin-left: 7%;
+	}
+	label {
+		width: 19%;
+	}
 }

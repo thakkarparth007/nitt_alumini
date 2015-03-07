@@ -17,6 +17,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<meta charset="utf-8" />
 	<title>NITT Alumini</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" media="(max-width:600px)" href="css/main_vsmall.css">
 	<link rel="stylesheet" href="js/intl-tel-input/build/css/intlTelInput.css">
 </head>
 <body>
@@ -31,14 +32,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	</div>
 	<div id="tabContainer">
 		<div id="tabWrapper">
-			<a href="#part1" id="link_p1" class="tab active">Part 1 : Contact Details</a>
-			<a href="#part2" id="link_p2" class="tab">Part 2 : Contribution to NITT</a>
-			<a href="#part3" id="link_p3" class="tab">Part 3 : Services from Students</a>
+			<a href="#part1" id="link_p1" class="tab active">Part 1<span class="exxtra"> : Contact</span> <span class="extra">Details</span></a>
+			<a href="#part2" id="link_p2" class="tab">Part 2<span class="exxtra"> : Contribution</span> <span class="extra">to NITT</span></a>
+			<a href="#part3" id="link_p3" class="tab">Part 3<span class="exxtra"> : Services</span> <span class="extra">from Students</span></a>
 		</div>
 	</div>
 	<script id="past_expr_widget_tpl" type="text/x-handlebars-template">
 		<span class="past_expr_span" id="past_expr{{EXPR_COUNT}}_span">
-			<label></label>
 			<input type="text" name="past_expr{{EXPR_COUNT}}" id="past_expr{{EXPR_COUNT}}">
 			<a href="" class="past_expr_rem" id="past_expr{{EXPR_COUNT}}_rem" name="past_expr{{EXPR_COUNT}}_rem">Remove</a>
 		</span>
@@ -148,7 +148,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<!-- filler -->
 			<label></label>
 			<a href="" id="past_expr_add" name="past_expr_add">Add</a>
-			<span id="succpast_expr" class="success">✓ Valid</span><span id="errpast_expr" class="error"></span>
+			<span id="succpast_expr1" class="success">✓ Valid</span><span id="errpast_expr1" class="error"></span>
 		</p>
 		<br>
 
@@ -274,8 +274,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<script type="text/javascript" src="js/past_expr.js"></script>
 	<script type="text/javascript" src="js/validate.js"></script>
 	<script type="text/javascript">
+	$(".success").hide();
 	function alertUser() {
-		$("body").css("overflow", "hidden");
+		$("body")
+			.animate({ "scrollTop": 0 }, "slow")
+			.css("overflow", "hidden");
+
 		$("#name").blur();
 		$("#error_message")
 			.show("slow")
